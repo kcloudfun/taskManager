@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taskManager.dao.ITaskDao" >
+  
+  <select id="selectTaskList" resultType="com.taskManager.vo.db.TaskDbVo">
+  	SELECT task_id taskId,task_name taskName FROM t_task
+  </select>
+</mapper>
