@@ -17,13 +17,13 @@ public class TaskControl {
 	@Autowired
 	private ITaskService taskService;
 
-	@DbSwitchAnnotation
+	@DbSwitchAnnotation("master")
 	@RequestMapping(value = "/{accountName}/list/get", method = RequestMethod.GET)
 	public CommonResult<?> getTaskList(@PathVariable String accountName) {
 		System.out.println("执行了controller方法");
 		return taskService.getTaskListByAccountName();
 	}
-	
+
 	@RequestMapping(value = "/{accountName}/list/get1", method = RequestMethod.GET)
 	public CommonResult<?> getTaskList1(@PathVariable String accountName) {
 		System.out.println("执行了controller方法");

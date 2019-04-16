@@ -17,4 +17,5 @@ import java.lang.annotation.Target;
 @Documented // 加上之后可被javadoc生成出去
 public @interface DbSwitchAnnotation {
 
+	String value();
 }
