@@ -5,3 +5,9 @@ spring:
 mybatis:
     type-aliases-package: com.taskManager.dao
     mapperLocations: classpath*:mapper/*.xml
+    
+threadpool: 
+    corePoolSize: 10
+    maxPoolSize: 10
+    queueCapacity: 10
+    keepAliveSeconds: 50000

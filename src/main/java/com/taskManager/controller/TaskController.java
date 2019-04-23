@@ -12,7 +12,7 @@ import com.taskManager.vo.response.CommonResult;
 
 @RestController
 @RequestMapping("/task/v1")
-public class TaskControl {
+public class TaskController {
 
 	@Autowired
 	private ITaskService taskService;
