@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taskManager.dao.IStudentDao" >
+  
+  <resultMap type="com.taskManager.vo.db.SimpleStudentVo" id="result1">
+  	<result column="student_name" property="studentName"/>
+  	<result column="age" property="age"/>
+  </resultMap>
+  
+  <!-- 测试mybatis resultMap的继承 -->
+  <resultMap type="com.taskManager.vo.db.StudentVo" id="result2" extends="result1">
+  	<id column="id" property="id"/>
+  	<result column="address" property="address"/>
+  	<result column="class_id" property="classId"/>
+  </resultMap>
+  
+  <select id="selectStudentByKey" resultMap="result2">
+  	SELECT * FROM student
+  </select>
+  
+  <!-- 不太常用，两个resultmap要对应两个vo，两个vo还要是继承关系 -->
+  <!-- resultmap不对应两个vo就会运行报错 -->
+  <!-- 两个vo不是继承关系就没办法在第二个vo中获取全部字段值 -->
+</mapper>
