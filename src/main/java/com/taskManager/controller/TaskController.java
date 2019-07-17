@@ -29,4 +29,12 @@ public class TaskController {
 		System.out.println("执行了controller方法");
 		return taskService.getTaskListByAccountName();
 	}
+
+	@RequestMapping(value = "/{tableName}/create/datas", method = RequestMethod.GET)
+	public CommonResult<?> toCreateTestDatas(@PathVariable String tableName) {
+		System.out.println("为" + tableName + "创了5000条数据");
+		CommonResult<Boolean> result = new CommonResult<>();
+		result.setData(taskService.createTestDatas(tableName));
+		return result;
+	}
 }

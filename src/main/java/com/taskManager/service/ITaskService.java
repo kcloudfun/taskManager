@@ -8,4 +8,6 @@ import com.taskManager.vo.response.CommonResult;
 public interface ITaskService {
 
 	public CommonResult<List<TaskDbVo>> getTaskListByAccountName();
+	
+	public boolean createTestDatas(String tableName);
 }

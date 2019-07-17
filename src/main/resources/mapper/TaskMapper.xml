@@ -5,4 +5,11 @@
   <select id="selectTaskList" resultType="com.taskManager.vo.db.TaskDbVo">
   	SELECT task_id taskId,task_name taskName FROM t_task
   </select>
+  
+  <insert id="batchinsert" parameterType="list">
+  	INSERT INTO t_task VALUES
+  	<foreach collection="list" separator="," item="taskDbVo">
+  		(default,#{taskDbVo.taskName,jdbcType=VARCHAR})
+  	</foreach>
+  </insert>
 </mapper>

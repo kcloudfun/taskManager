@@ -10,4 +10,6 @@ import com.taskManager.vo.db.TaskDbVo;
 public interface ITaskDao {
 
 	public List<TaskDbVo> selectTaskList();
+	
+	public int batchinsert(List<TaskDbVo> taskList);
 }

@@ -1,6 +1,10 @@
 package com.taskManager.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,26 @@ public class TaskServiceImpl implements ITaskService {
 			result.setData(taskList);
 		}
 		return result;
+	}
+
+	@Override
+	public boolean createTestDatas(String tableName) {
+		List<TaskDbVo> taskList = new ArrayList<>();
+		Date dt = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = sdf.format(dt);
+		for (int i = 0; i < 5000; i++) {
+			TaskDbVo task = new TaskDbVo();
+			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+			task.setTaskName(dateStr + ":" + uuid);
+			taskList.add(task);
+		}
+		int a = taskDao.batchinsert(taskList);
+		if (a == 5000) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
