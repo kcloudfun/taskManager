@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taskManager.dao.ITemplateDao" >
+
+	<!-- $与#的区别在于，$不会采取预编译，会先将参数放到sql里面组装好，然后将sql丢给db。而#会先将参数用？表示的形式放在sql里面，然后将sql与参数分开丢给db -->
+	<!-- 原则上优先用#，防sql注入，若参数会影响预编译是否成功那用$ -->
+
+	<!-- 通用性批量插入 -->
+	<insert id="batchInsert" parameterType="string">
+		INSERT INTO 
+			${tableName} 
+		<foreach collection="paramMapList.get(0).keys" item="key" open="(" close=")" separator=",">
+			${key}
+		</foreach>
+		VALUES
+		<foreach collection="paramMapList" item="paramMap" separator=",">
+			<foreach collection="paramMap.values" item="value" separator="," open="(" close=")" >
+				<choose>
+					<when test="value != null and value == 'default' ">${value}</when>
+					<otherwise>#{value}</otherwise>
+				</choose>
+			</foreach>
+		</foreach>
+	</insert>
+
+	<!-- foreach collection入参为map时加.keys就是迭代的map的key集合，加.values就是迭代的value集合 -->
+	<!-- foreach collection入参为list时可以加.get(i)获取特定某一个list里面对象 -->
+
+</mapper>
