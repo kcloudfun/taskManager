@@ -5,7 +5,7 @@
 	<!-- $与#的区别在于，$不会采取预编译，会先将参数放到sql里面组装好，然后将sql丢给db。而#会先将参数用？表示的形式放在sql里面，然后将sql与参数分开丢给db -->
 	<!-- 原则上优先用#，防sql注入，若参数会影响预编译是否成功那用$ -->
 
-	<!-- 通用性批量插入 -->
+	<!-- 通用型批量插入 -->
 	<insert id="batchInsert" parameterType="string">
 		INSERT INTO 
 			${tableName} 
@@ -25,5 +25,21 @@
 
 	<!-- foreach collection入参为map时加.keys就是迭代的map的key集合，加.values就是迭代的value集合 -->
 	<!-- foreach collection入参为list时可以加.get(i)获取特定某一个list里面对象 -->
+
+	<!-- 通用型单行插入 -->
+	<insert id="oneInsert" parameterType="string">
+		INSERT INTO 
+			${tableName} 
+		<foreach collection="paramMap.keys" item="key" open="(" close=")" separator=",">
+			${key}
+		</foreach>
+		VALUES
+		<foreach collection="paramMap.values" item="value" separator="," open="(" close=")" >
+			<choose>
+				<when test="value != null and value == 'default' ">${value}</when>
+				<otherwise>#{value}</otherwise>
+			</choose>
+		</foreach>
+	</insert>
 
 </mapper>
