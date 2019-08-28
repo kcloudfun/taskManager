@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.taskManager.constant.ObjectSourceEnum;
 
 /**
  * javaBean 相关工具方法
@@ -38,7 +39,7 @@ public class BeanUtils {
 		}
 		List<LinkedHashMap<String, Object>> resultList = new ArrayList<>();
 		for (int i = 0; i < paramList.size(); i++) {
-			resultList.add(bean2map(paramList.get(i)));
+			resultList.add(bean2map(paramList.get(i), ObjectSourceEnum.NORMAL.getValue()));
 		}
 		return resultList;
 	}
@@ -47,11 +48,12 @@ public class BeanUtils {
 	 * 将java对象转化为有序的map（屏蔽掉为null的属性，map键为TASK_STATUS样式）
 	 * 
 	 * @param obj
-	 *            java对象
-	 * @return linkedHashMap
-	 * @author likai 2019年7月22日 下午7:24:28
+	 * @param objectSourceFlg
+	 *            java对象是否为通过cglib创建，1表示为cglib创建，0表示正常对象
+	 * @return
+	 * @author likai 2019年8月27日 下午10:02:27
 	 */
-	public static LinkedHashMap<String, Object> bean2map(Object obj) {
+	public static LinkedHashMap<String, Object> bean2map(Object obj, int objectSourceFlg) {
 		if (obj == null) {
 			log.info("bean2map方法参数异常，方法结束：obj==null");
 			return null;
@@ -73,6 +75,12 @@ public class BeanUtils {
 			String upperCaseName = methodName.toUpperCase();
 			for (int j = 0; j < declaredFields.length; j++) {
 				String fieldName = declaredFields[j].getName();
+
+				if (ObjectSourceEnum.CGLIB.getValue() == objectSourceFlg) {
+					// 通过cglib创建的会有特殊前缀，截取去掉前缀部分
+					fieldName = fieldName.substring(12);
+				}
+
 				String upperCaseFieldName = fieldName.toUpperCase();
 				// 判断方法是否包含属性，且是否是get方法
 				if (upperCaseName.contains(upperCaseFieldName) && upperCaseName.startsWith("GET")) {
