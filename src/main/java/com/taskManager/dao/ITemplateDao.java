@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.taskManager.vo.db.TableDbVo;
+
 @Mapper
 public interface ITemplateDao {
 
@@ -35,4 +37,13 @@ public interface ITemplateDao {
 	 */
 	public int oneInsert(@Param("tableName") String tableName,
 			@Param("paramMap") LinkedHashMap<String, Object> paramMap);
+
+	/**
+	 * 根据参数创建一张表
+	 * 
+	 * @param tableDbVo
+	 *            目标表相关参数
+	 * @author likai 2019年11月13日 下午9:03:00
+	 */
+	public void createTable(TableDbVo tableDbVo);
 }

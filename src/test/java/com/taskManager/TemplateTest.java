@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.taskManager.dao.ITemplateDao;
 import com.taskManager.utils.BeanUtils;
+import com.taskManager.vo.db.TableDbVo;
 import com.taskManager.vo.db.TaskDbVo;
 
 public class TemplateTest extends TaskManagerApplicationTests {
@@ -43,5 +44,17 @@ public class TemplateTest extends TaskManagerApplicationTests {
 
 		int a = templateDao.batchInsert("t_task", taskList);
 		System.out.println(a);
+	}
+	
+	@Test
+	public void testCreateTable() {
+		TableDbVo tableDbVo = new TableDbVo();
+		tableDbVo.setTableName("table1");
+		tableDbVo.setKeyName("id");
+		List<String> list = new ArrayList<>();
+		list.add("id int");
+		list.add("space varchar(20)");
+		tableDbVo.setColumnParams(list);
+		templateDao.createTable(tableDbVo);
 	}
 }

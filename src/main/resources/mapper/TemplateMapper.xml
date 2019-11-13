@@ -42,4 +42,16 @@
 		</foreach>
 	</insert>
 
+	<update id="createTable" parameterType="com.taskManager.vo.db.TableDbVo">
+		CREATE TABLE t_${tableName} (
+			<foreach collection="columnParams" item="column" separator=",">
+				${column}
+			</foreach>
+			<if test="keyName != null and keyName != ''">
+				,PRIMARY KEY (${keyName})
+			</if>
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8
+	</update>
+
+
 </mapper>
